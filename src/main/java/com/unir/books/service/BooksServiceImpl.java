@@ -47,44 +47,27 @@ public class BooksServiceImpl implements BooksService {
         return null;
     }
 
-    /*
-        @Override
-        public Book getBook(String bookIsbn) {
-            return repository.getById(bookIsbn);
-        }
-        */
+    @Override
+    public BookDto getBook(String bookIsbn) {
+        Book book = repository.getById(bookIsbn);
+        return mapper.toBookDto(book);
+    }
+
     @Override
     public BookDto createBook(BookDto bookDto) {
-        Book bookToInsert = mapper.toBook(bookDto);
-        Book bookInserted = repository.save(bookToInsert);
-        return mapper.toBookDto(bookInserted);
-    }
-    /*
-    @Override
-    public Book createBook(CreateBookRequest request) {
-        if (request != null
-                && StringUtils.hasLength(request.getIsbn().trim())
-                && StringUtils.hasLength(request.getTitle().trim())
-                && StringUtils.hasLength(request.getCategory().trim())
-                && StringUtils.hasLength(request.getAuthor().trim())
-                && request.getPageCount()  != null && request.getPageCount() > 0
-                && StringUtils.hasLength(request.getDescription().trim())) {
+        if (bookDto != null
+                && StringUtils.hasLength(bookDto.getId().trim())
+                && StringUtils.hasLength(bookDto.getName().trim())) {
 
-            Book book = Book.builder()
-                    .isbn(request.getIsbn())
-                    .title(request.getTitle())
-                    .category(request.getCategory())
-                    .author(request.getAuthor())
-                    .pageCount(request.getPageCount())
-                    .description(request.getDescription())
-                    .build();
+            Book bookToInsert = mapper.toBook(bookDto);
+            Book bookInserted = repository.save(bookToInsert);
 
-            return repository.save(book);
+            return mapper.toBookDto(bookInserted);
         } else {
             return null;
         }
     }
-    */
+
     /*
     @Override
     public Book updateBook(String bookIsbn, String request) {

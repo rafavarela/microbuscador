@@ -53,6 +53,31 @@ public class BooksController {
 //        return ResponseEntity.ok(Objects.requireNonNullElse(books, Collections.emptyList()));
 //    }
 //
+    @GetMapping("/books/{bookId}")
+    @Operation(
+            operationId = "Obtener un libro",
+            description = "Operacion de lectura",
+            summary = "Se devuelve un libro a partir de su identificador.")
+    @ApiResponse(
+            responseCode = "200",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = BookDto.class)))
+    @ApiResponse(
+            responseCode = "404",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)),
+            description = "No se ha encontrado el libro con el identificador indicado.")
+    public ResponseEntity<BookDto> getBook(@PathVariable String bookId) {
+
+        //log.info("Request received for book {}", bookId);
+        BookDto bookDto = service.getBook(bookId);
+
+        if (bookDto != null) {
+            return ResponseEntity.ok(bookDto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+
     @PostMapping("/books")
     @Operation(
             operationId = "Insertar un libro",
