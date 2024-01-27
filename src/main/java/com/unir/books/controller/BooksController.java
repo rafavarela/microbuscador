@@ -27,6 +27,7 @@ public class BooksController {
         this.service = service;
     }
 
+
     @GetMapping("/books")
     @Operation(
             operationId = "Obtener libros",
@@ -115,5 +116,34 @@ public class BooksController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+
+    @PatchMapping("/books/{bookId}")
+    @Operation(
+            operationId = "Modificar parcialmente un libro",
+            description = "RFC 7386. Operacion de escritura",
+            summary = "RFC 7386. Se modifica parcialmente un libro.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Datos del libro a crear.",
+                    required = true,
+                    content = @Content(mediaType = "application/merge-patch+json", schema = @Schema(implementation = String.class))))
+    @ApiResponse(
+            responseCode = "200",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = BookDto.class)))
+    @ApiResponse(
+            responseCode = "400",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)),
+            description = "Libro inválido o datos incorrectos introducidos.")
+    public ResponseEntity<BookDto> patchBook(@PathVariable String bookId, @RequestBody String patchBody) {
+
+        BookDto patched = service.updateBook(bookId, patchBody);
+
+        if (patched != null) {
+            return ResponseEntity.ok(patched);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 
 }

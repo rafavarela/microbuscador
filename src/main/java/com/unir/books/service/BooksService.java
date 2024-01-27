@@ -10,7 +10,7 @@ public interface BooksService {
 
     BookDto createBook(BookDto bookDto);
 
-    //Book updateBook(String bookIsbn, String updateRequest);
+    BookDto updateBook(String bookIsbn, String updateRequest);
 
     //Book updateBook(String bookIsbn, BookDto updateRequest);
 

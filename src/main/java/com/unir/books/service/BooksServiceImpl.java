@@ -25,6 +25,9 @@ public class BooksServiceImpl implements BooksService {
     @Autowired
     private BookMapper mapper;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Override
     public List<BookDto> getBooks(String title, String category, String description, String author) {
         List<Book> books;
@@ -64,27 +67,30 @@ public class BooksServiceImpl implements BooksService {
         }
     }
 
-    /*
+
     @Override
-    public Book updateBook(String bookIsbn, String request) {
+    public BookDto updateBook(String bookIsbn, String request) {
         Book book = repository.getById(bookIsbn);
 
         if (book != null) {
             try {
+                BookDto bookDto = mapper.toBookDto(book);
                 JsonMergePatch jsonMergePatch = JsonMergePatch.fromJson(objectMapper.readTree(request));
-                JsonNode target = jsonMergePatch.apply(objectMapper.readTree(objectMapper.writeValueAsString(book)));
-                Book patched = objectMapper.treeToValue(target, Book.class);
-                repository.save(patched);
+                JsonNode target = jsonMergePatch.apply(objectMapper.readTree(objectMapper.writeValueAsString(bookDto)));
+                BookDto patched = objectMapper.treeToValue(target, BookDto.class);
+                repository.save(mapper.toBook(patched));
+
                 return patched;
+
             } catch (JsonProcessingException | JsonPatchException e) {
-                log.error("Error updating book {}", bookIsbn, e);
+                //log.error("Error updating book {}", bookIsbn, e);
                 return null;
             }
         } else {
             return null;
         }
     }
-
+    /*
     @Override
     public Book updateBook(String bookIsbn, BookDto updateRequest) {
         Book book = repository.getById(bookIsbn);
