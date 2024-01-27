@@ -175,4 +175,27 @@ public class BooksController {
     }
 
 
+    @DeleteMapping("/books/{bookId}")
+    @Operation(
+            operationId = "Eliminar un libro",
+            description = "Operacion de escritura",
+            summary = "Se elimina un libro a partir de su identificador.")
+    @ApiResponse(
+            responseCode = "200",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)))
+    @ApiResponse(
+            responseCode = "404",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)),
+            description = "No se ha encontrado el libro con el identificador indicado.")
+    public ResponseEntity<Void> deleteBook(@PathVariable String bookId) {
+
+        Boolean removed = service.removeBook(bookId);
+
+        if (Boolean.TRUE.equals(removed)) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
 }

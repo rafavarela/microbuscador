@@ -105,10 +105,10 @@ public class BooksServiceImpl implements BooksService {
         }
     }
 
-    /*
     @Override
     public Boolean removeBook(String bookIsbn) {
         Book book = repository.getById(bookIsbn);
+
         if (book != null) {
             repository.delete(book);
             return Boolean.TRUE;
@@ -116,5 +116,5 @@ public class BooksServiceImpl implements BooksService {
             return Boolean.FALSE;
         }
     }
-    */
+
 }

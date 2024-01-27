@@ -15,5 +15,5 @@ public interface BooksService {
 
     BookDto updateBook(String bookIsbn, BookUpdateRequestDto updateRequest);
 
-    //Boolean removeBook(String bookIsbn);
+    Boolean removeBook(String bookIsbn);
 }
