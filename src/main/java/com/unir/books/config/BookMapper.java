@@ -20,7 +20,11 @@ public interface BookMapper {
             @Mapping(source = "summary", target = "description")
     })
     Book toBook(BookDto bookDto);
+    List<Book> toBooks(List<BookDto> booksDto);
 
     @InheritInverseConfiguration
     BookDto toBookDto(Book book);
+
+    @InheritInverseConfiguration
+    List<BookDto> toBooksDto(List<Book> books);
 }

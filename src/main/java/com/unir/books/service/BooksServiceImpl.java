@@ -25,26 +25,22 @@ public class BooksServiceImpl implements BooksService {
     @Autowired
     private BookMapper mapper;
 
-//    @Override
-//    public List<BookDto> getBooks(String title, String category, String description, String author) {
-//        if (StringUtils.hasLength(title)
-//                || StringUtils.hasLength(category)
-//                || StringUtils.hasLength(description)
-//                || StringUtils.hasLength(author)) {
-//
-//            List<Book> books = repository.search(title, category, description, author);
-//
-//        }
-//
-//        List<Book> books = repository.getBooks();
-//
-//        return books.isEmpty() ? null : books;
-//    }
-
-
     @Override
     public List<BookDto> getBooks(String title, String category, String description, String author) {
-        return null;
+        List<Book> books;
+        if (StringUtils.hasLength(title)
+                || StringUtils.hasLength(category)
+                || StringUtils.hasLength(description)
+                || StringUtils.hasLength(author)) {
+
+            books = repository.search(title, category, description, author);
+        } else {
+            books = repository.getBooks();
+        }
+
+        List<BookDto> bookDtos = mapper.toBooksDto(books);
+
+        return books.isEmpty() ? null : bookDtos;
     }
 
     @Override

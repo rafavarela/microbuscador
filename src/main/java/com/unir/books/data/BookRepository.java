@@ -1,9 +1,13 @@
 package com.unir.books.data;
 
+import com.unir.books.data.utils.SearchCriteria;
+import com.unir.books.data.utils.SearchOperation;
+import com.unir.books.data.utils.SearchStatement;
 import com.unir.books.model.pojo.Book;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
+
 @Repository
 public class BookRepository {
     private final BookJpaRepository repository;
@@ -28,25 +32,25 @@ public class BookRepository {
         repository.delete(book);
     }
 
-//    public List<Book> search(String title, String category, String description, String author) {
-//        SearchCriteria<Book> spec = new SearchCriteria<>();
-//
-//        if (StringUtils.isNotBlank(title)) {
-//            spec.add(new SearchStatement("title", title, SearchOperation.MATCH));
-//        }
-//
-//        if (StringUtils.isNotBlank(category)) {
-//            spec.add(new SearchStatement("category", category, SearchOperation.MATCH));
-//        }
-//
-//        if (StringUtils.isNotBlank(description)) {
-//            spec.add(new SearchStatement("description", description, SearchOperation.MATCH));
-//        }
-//
-//        if (StringUtils.isNotBlank(author)) {
-//            spec.add(new SearchStatement("author", author, SearchOperation.MATCH));
-//        }
-//
-//        return repository.findAll(spec);
-//    }
+    public List<Book> search(String title, String category, String description, String author) {
+        SearchCriteria<Book> spec = new SearchCriteria<>();
+
+        if (StringUtils.isNotBlank(title)) {
+            spec.add(new SearchStatement("title", title, SearchOperation.MATCH));
+        }
+
+        if (StringUtils.isNotBlank(category)) {
+            spec.add(new SearchStatement("category", category, SearchOperation.MATCH));
+        }
+
+        if (StringUtils.isNotBlank(description)) {
+            spec.add(new SearchStatement("description", description, SearchOperation.MATCH));
+        }
+
+        if (StringUtils.isNotBlank(author)) {
+            spec.add(new SearchStatement("author", author, SearchOperation.MATCH));
+        }
+
+        return repository.findAll(spec);
+    }
 }

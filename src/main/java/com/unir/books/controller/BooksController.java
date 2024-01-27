@@ -1,9 +1,9 @@
 package com.unir.books.controller;
 
-import com.unir.books.model.pojo.Book;
 import com.unir.books.model.pojo.BookDto;
 import com.unir.books.service.BooksService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -11,6 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @Slf4j
@@ -22,37 +27,38 @@ public class BooksController {
         this.service = service;
     }
 
-    //    @GetMapping("/books")
-//    @Operation(
-//            operationId = "Obtener libros",
-//            description = "Operacion de lectura",
-//            summary = "Se devuelve una lista de todos los libros almacenados en la base de datos.")
-//    @ApiResponse(
-//            responseCode = "200",
-//            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Book.class)))
-//    public ResponseEntity<List<Book>> getBooks(
-//            @RequestHeader Map<String, String> headers,
-//
-//            @Parameter(name = "title", description = "Nombre del libro. No tiene por que ser exacto", example = "años de la soledad", required = false)
-//            @RequestParam(required = false) String title,
-//
-//            @Parameter(name = "category", description = "Categoría del libro. No tiene por que ser exacto", example = "Novela", required = false)
-//            @RequestParam(required = false) String category,
-//
-//            @Parameter(name = "author", description = "Autor del libro. No tiene por que ser exacto", example = "García Márquez", required = false)
-//            @RequestParam(required = false) String author,
-//
-//            @Parameter(name = "description", description = "Texto incluido en la descripción del libro. No tiene por que ser exacto", example = "pueblo de Macondo", required = false)
-//            @RequestParam(required = false) String description
-//            ) {
-//
-//        log.info("headers: {}", headers);
-//
-//        List<Book> books = service.getBooks(title, category, author, description);
-//
-//        return ResponseEntity.ok(Objects.requireNonNullElse(books, Collections.emptyList()));
-//    }
-//
+    @GetMapping("/books")
+    @Operation(
+            operationId = "Obtener libros",
+            description = "Operacion de lectura",
+            summary = "Se devuelve una lista de todos los libros almacenados en la base de datos.")
+    @ApiResponse(
+            responseCode = "200",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = BookDto.class)))
+    public ResponseEntity<List<BookDto>> getBooks(
+            @RequestHeader Map<String, String> headers,
+
+            @Parameter(name = "title", description = "Nombre del libro. No tiene por que ser exacto", example = "años de la soledad", required = false)
+            @RequestParam(required = false) String title,
+
+            @Parameter(name = "category", description = "Categoría del libro. No tiene por que ser exacto", example = "Novela", required = false)
+            @RequestParam(required = false) String category,
+
+            @Parameter(name = "author", description = "Autor del libro. No tiene por que ser exacto", example = "García Márquez", required = false)
+            @RequestParam(required = false) String author,
+
+            @Parameter(name = "description", description = "Texto incluido en la descripción del libro. No tiene por que ser exacto", example = "pueblo de Macondo", required = false)
+            @RequestParam(required = false) String description
+            ) {
+
+        //log.info("headers: {}", headers);
+
+        List<BookDto> books = service.getBooks(title, category, author, description);
+
+        return ResponseEntity.ok(Objects.requireNonNullElse(books, Collections.emptyList()));
+    }
+
+
     @GetMapping("/books/{bookId}")
     @Operation(
             operationId = "Obtener un libro",
@@ -77,6 +83,7 @@ public class BooksController {
         }
 
     }
+
 
     @PostMapping("/books")
     @Operation(
@@ -108,4 +115,5 @@ public class BooksController {
             return ResponseEntity.badRequest().build();
         }
     }
+
 }
