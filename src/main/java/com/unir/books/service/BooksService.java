@@ -2,6 +2,7 @@ package com.unir.books.service;
 
 import java.util.List;
 import com.unir.books.model.pojo.BookDto;
+import com.unir.books.model.pojo.BookUpdateRequestDto;
 
 public interface BooksService {
     List<BookDto> getBooks(String title, String category, String description, String author);
@@ -12,7 +13,7 @@ public interface BooksService {
 
     BookDto updateBook(String bookIsbn, String updateRequest);
 
-    //Book updateBook(String bookIsbn, BookDto updateRequest);
+    BookDto updateBook(String bookIsbn, BookUpdateRequestDto updateRequest);
 
     //Boolean removeBook(String bookIsbn);
 }

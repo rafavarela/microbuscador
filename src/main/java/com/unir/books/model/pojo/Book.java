@@ -80,13 +80,13 @@ public class Book {
         this.description = description;
     }
 
-    /*
-    public void update(BookDto bookDto) {
-        this.title = bookDto.getTitle();
-        this.category = bookDto.getCategory();
+
+    public void update(BookUpdateRequestDto bookDto) {
+        this.title = bookDto.getName();
+        this.category = bookDto.getGenre();
         this.author = bookDto.getAuthor();
-        this.description = bookDto.getDescription();
+        this.pageCount = bookDto.getPages();
+        this.description = bookDto.getSummary();
     }
-    */
 
 }

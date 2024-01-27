@@ -1,6 +1,7 @@
 package com.unir.books.controller;
 
 import com.unir.books.model.pojo.BookDto;
+import com.unir.books.model.pojo.BookUpdateRequestDto;
 import com.unir.books.service.BooksService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -106,7 +107,7 @@ public class BooksController {
             responseCode = "404",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)),
             description = "No se ha encontrado el libro con el identificador indicado.")
-    public ResponseEntity<BookDto> addProduct(@RequestBody BookDto request) {
+    public ResponseEntity<BookDto> addBook(@RequestBody BookDto request) {
 
         BookDto createdBook = service.createBook(request);
 
@@ -142,6 +143,34 @@ public class BooksController {
             return ResponseEntity.ok(patched);
         } else {
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+
+    @PutMapping("/books/{bookId}")
+    @Operation(
+            operationId = "Modificar totalmente un libro",
+            description = "Operacion de escritura",
+            summary = "Se modifica totalmente un libro.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Datos del libro a actualizar.",
+                    required = true,
+                    content = @Content(mediaType = "application/merge-patch+json", schema = @Schema(implementation = BookUpdateRequestDto.class))))
+    @ApiResponse(
+            responseCode = "200",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = BookDto.class)))
+    @ApiResponse(
+            responseCode = "404",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)),
+            description = "Libro no encontrado.")
+    public ResponseEntity<BookDto> updateBook(@PathVariable String bookId, @RequestBody BookUpdateRequestDto body) {
+
+        BookDto updated = service.updateBook(bookId, body);
+
+        if (updated != null) {
+            return ResponseEntity.ok(updated);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatchException;
 import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
 import com.unir.books.config.BookMapper;
+import com.unir.books.model.pojo.BookUpdateRequestDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,20 +91,21 @@ public class BooksServiceImpl implements BooksService {
             return null;
         }
     }
-    /*
+
     @Override
-    public Book updateBook(String bookIsbn, BookDto updateRequest) {
+    public BookDto updateBook(String bookIsbn, BookUpdateRequestDto updateRequest) {
         Book book = repository.getById(bookIsbn);
 
         if (book != null) {
-            book.update(updateRequest);
+            book.update(updateRequest); // Mutation
             repository.save(book);
-            return book;
+            return mapper.toBookDto(book);
         } else {
             return null;
         }
     }
 
+    /*
     @Override
     public Boolean removeBook(String bookIsbn) {
         Book book = repository.getById(bookIsbn);
