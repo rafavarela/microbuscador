@@ -32,7 +32,7 @@ public class BookRepository {
         repository.delete(book);
     }
 
-    public List<Book> search(String title, String category, String description, String author) {
+    public List<Book> search(String title, String category, String author, String description) {
         SearchCriteria<Book> spec = new SearchCriteria<>();
 
         if (StringUtils.isNotBlank(title)) {
@@ -43,12 +43,12 @@ public class BookRepository {
             spec.add(new SearchStatement("category", category, SearchOperation.MATCH));
         }
 
-        if (StringUtils.isNotBlank(description)) {
-            spec.add(new SearchStatement("description", description, SearchOperation.MATCH));
-        }
-
         if (StringUtils.isNotBlank(author)) {
             spec.add(new SearchStatement("author", author, SearchOperation.MATCH));
+        }
+
+        if (StringUtils.isNotBlank(description)) {
+            spec.add(new SearchStatement("description", description, SearchOperation.MATCH));
         }
 
         return repository.findAll(spec);

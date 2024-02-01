@@ -5,7 +5,7 @@ import com.unir.books.model.pojo.BookDto;
 import com.unir.books.model.pojo.BookUpdateRequestDto;
 
 public interface BooksService {
-    List<BookDto> getBooks(String title, String category, String description, String author);
+    List<BookDto> getBooks(String title, String category, String author, String description);
 
     BookDto getBook(String bookIsbn);
 

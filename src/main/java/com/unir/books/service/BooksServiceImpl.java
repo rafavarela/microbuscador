@@ -30,14 +30,14 @@ public class BooksServiceImpl implements BooksService {
     private ObjectMapper objectMapper;
 
     @Override
-    public List<BookDto> getBooks(String title, String category, String description, String author) {
+    public List<BookDto> getBooks(String title, String category, String author, String description) {
         List<Book> books;
         if (StringUtils.hasLength(title)
                 || StringUtils.hasLength(category)
-                || StringUtils.hasLength(description)
-                || StringUtils.hasLength(author)) {
+                || StringUtils.hasLength(author)
+                || StringUtils.hasLength(description)) {
 
-            books = repository.search(title, category, description, author);
+            books = repository.search(title, category, author, description);
         } else {
             books = repository.getBooks();
         }
